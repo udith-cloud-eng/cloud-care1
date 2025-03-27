@@ -10,7 +10,7 @@ interface AdminData {
   scheduledCount: number;
   pendingCount: number;
   cancelledCount: number;
-  documents: any[]; // Replace with appropriate type for your documents
+  documents: any[]; // Replace with appropriate type for your documents h
 }
 
 const AdminPage = async () => {
