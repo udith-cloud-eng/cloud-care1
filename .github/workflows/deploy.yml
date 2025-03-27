@@ -16,10 +16,26 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '18'  # Updated to Node.js 18
+        node-version: '18'
+
+    - name: Cache Next.js cache
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-node-modules
+      with:
+        path: .next/cache
+        key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nextjs-
+
+    - name: Disable Next.js telemetry
+      run: npx next telemetry disable
+
+    - name: Update Browserslist DB
+      run: npx update-browserslist-db@latest
 
     - name: Install dependencies
-      run: npm install  # Removed legacy-peer-deps flag unless specifically needed
+      run: npm install
 
     - name: Build Next.js application
       run: npm run build
