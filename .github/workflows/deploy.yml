@@ -50,14 +50,13 @@ jobs:
           # Remove existing files in the web directory
           sudo rm -rf /opt/bitnami/apache/htdocs/*
           
-          # Remove index.html specifically
-          sudo rm -f /opt/bitnami/apache/htdocs/index.html
-          
           # Copy the built Next.js files to the web directory
-          sudo cp -r ${{ github.workspace }}/.next/* /opt/bitnami/apache/htdocs/
+          sudo cp -r ${{ github.workspace }}/.next/server/* /opt/bitnami/apache/htdocs/
           
           # Set proper permissions
           sudo chown -R bitnami:bitnami /opt/bitnami/apache/htdocs
+          sudo chmod -R 755 /opt/bitnami/apache/htdocs
           
           # Restart Apache to apply changes
           sudo /opt/bitnami/ctlscript.sh restart apache
+          sudo /opt/bitnami/ctlscript.sh status apache
