@@ -16,13 +16,12 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '16'
+        node-version: '18'  # Updated to Node.js 18
 
-    - name: Install .js dependencies
-      run: npm install --legacy-peer-deps
-    
+    - name: Install dependencies
+      run: npm install  # Removed legacy-peer-deps flag unless specifically needed
 
-    - name: Build Vue.js application
+    - name: Build Next.js application
       run: npm run build
 
     - name: Deploy to EC2
@@ -35,8 +34,8 @@ jobs:
           # Remove existing files in the web directory
           sudo rm -rf /opt/bitnami/apache/htdocs/*
           
-          # Copy the built Vue.js files to the web directory
-          sudo cp -r ${{ github.workspace }}/dist/* /opt/bitnami/apache/htdocs/
+          # Copy the built Next.js files to the web directory
+          sudo cp -r ${{ github.workspace }}/.next/* /opt/bitnami/apache/htdocs/
           
           # Set proper permissions
           sudo chown -R bitnami:bitnami /opt/bitnami/apache/htdocs
